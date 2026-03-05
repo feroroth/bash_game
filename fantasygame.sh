@@ -16,27 +16,27 @@ case $class in
         type="knight"
         hp=30
         attack=30
-        speed=3
+        speed=10
         ;;
     2)
         type="mage"
         hp=20
         attack=10
         magicattack=20
-        speed=2
+        speed=20
         ;;
     3)
         type="archer"
         hp=20
         attack=20
-        speed=1
+        speed=30
         ;;
         
     info1)
         echo "info knight:
         hp = 30
         attack = 30
-        speed = 3"
+        speed = 30"
         exit 0
         ;;
         
@@ -45,7 +45,7 @@ case $class in
         hp = 20
         attack = 10
         magicattack = 20
-        speed = 2"
+        speed = 20"
         exit 0
         ;;
         
@@ -53,7 +53,7 @@ case $class in
         echo "info archer:
         hp = 20
         attack = 20
-        speed = 1"
+        speed = 10"
         exit 0
         ;;
         
@@ -68,17 +68,8 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
     read yorn
     if [[ $yorn == y ]]; then
         echo "Starting game..."
-        # tu pôjde logika hry
-        case $beast in
-	
-	    kostlivec)
-		    type="kostlivec"
-		    hpm=10
-		    attackm=5
-		    ;;
 
-        esac
-
+        sleep 1
 
         echo "Welcome to land where dragons still fly and orcs still fight, you are the only one who can free this land from bad wich king which rule this land 
         and is located in the deepest dungeons where you will be fighting creatures every man is scared to think of."
@@ -99,32 +90,80 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
         if [[ $ready == "y" ]]; then
 	        
-            $beast=kostlivec
+            beast=kostlivec
+            hpm=10
+            attackm=5
+
+            echo "Skeleton attacks!"
 
 	        echo "skeleton - hp = $hpm"
 	        
-	        echo "you - hp = $hp"
+	        echo "your $type - hp = $hp"
 	        
+            while [[ $hp -gt 0 && $hpm -gt 0 ]]; do
+            
 	        echo "skeleton is attacking, do you want to block? (y/n)"
 	        read block
 
 		    if [[ $block == y ]]; then
 			    succed=$(( $RANDOM % 2 ))
 			    if [[ $succed == 1 ]]; then
-				    echo "Your block succeed, you are 0,1 slower"
-                    speed=$(( $speed - 0,1))
+				    echo "Your block succeed, you are a bit slower"
+                    speed=$(( speed - 1 ))
+                    if [[ $speed -lt 1 ]]; then
+                        speed=1
+                    fi
 			    else 
 				    echo "Your block didn't succed"
-				    damage=$(( $RANDOM % $attackm ))
-				    if [[ $damage == 0 ]]; then
-				        echo "skeleton missed"
-				    else
-					    echo "damage is $damage"
-					    hp=$(( $hp - $damage ))
-				    fi
+				    damage=$(( RANDOM % attackm + 1 ))
+				    echo "You took $damage damage."
+                    hp=$(( hp - damage ))
 			    fi
+            else
+                damage=$(( RANDOM % attackm + 1 ))
+                echo "You took $damage damage."
+                hp=$(( hp - damage ))
 		    fi
-					       
+
+            echo "Your hp: $hp"
+
+            if [[ $hp -le 0 ]]; then
+                echo "YOU DIED"
+                break
+            fi
+
+            echo ""
+            echo "Your move"
+            echo "1 - strong attack - more damage, but also slows you"
+            echo "2 - small attack - less damage"
+
+            read attackchoice
+
+            if [[ $attackchoice == 1 ]]; then
+                playerdamage=$(( RANDOM % attack + attack / 2 ))
+                echo "You strike hard for $playerdamage damage!"
+                speed=$(( speed - 1 ))
+                if [[ $speed -lt 1 ]]; then
+                    speed=1
+                fi
+            else
+                    playerdamage=$(( RANDOM % (attack / 2) + 1 ))
+                    echo "You strike for $playerdamage damage!"
+            fi
+
+            hpm=$(( hpm - playerdamage ))
+
+                if [[ $hpm -le 0 ]]; then
+                    echo ""
+                    echo "You defeated the skeleton! Victory!"
+                else
+                    echo "Skeleton hp: $hpm"
+                fi
+
+                echo ""
+
+            done
+
 
         fi
     else

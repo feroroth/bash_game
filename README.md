@@ -18,3 +18,22 @@ To run this code you need to run these commands in your terminal:
 chmod +x fantasygame.sh
 ./fantasygame.sh
 - You need to run these commands in **directory where the game is**, should be ~/Downloads/bash_game/ depends on your language.
+
+                     │                  
+                    ─╯                  
+              ╭───╮  │                  
+              │───│  │                  
+              │ │ │  │                  
+            ╭─╰───╯╮ │                  
+      ╭───────╮    │ │                  
+      │       │    │╭┼╮                 
+      │       │    │╰┼╯                 
+      │       │    │ │                  
+      │       │    │ │                  
+      │       │╮╭─╮╯ │                  
+      │       │││ │  │                  
+      │       │││ │  │                  
+      │       │╮╭─╮  │                  
+      │       │││ │  │                  
+      │       │││ │  │                  
+      ╰───────╯╯╰─╯  │    

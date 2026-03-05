@@ -11,6 +11,8 @@ For info about class stats type: info1, info2, info3
 
 read class
 
+# classes
+
 case $class in
     1)
         type="knight"
@@ -63,9 +65,12 @@ case $class in
         ;;
 esac
 
+# first if checks what classes player choosed
 if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
     echo "You have chosen $type class, do you want to continue? (y/n)"
     read yorn
+
+    # if player pressed y
     if [[ $yorn == y ]]; then
         echo "Starting game..."
 
@@ -90,23 +95,27 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
         if [[ $ready == "y" ]]; then
 	        
+            # deffined enemy
             beast=kostlivec
             hpm=10
             attackm=5
 
             echo "Skeleton attacks!"
-
 	        echo "skeleton - hp = $hpm"
-	        
 	        echo "your $type - hp = $hp"
 	        
+            # start of a while loop, here attack beggins
             while [[ $hp -gt 0 && $hpm -gt 0 ]]; do
             
 	        echo "skeleton is attacking, do you want to block? (y/n)"
 	        read block
 
+            # part for blocking
+
 		    if [[ $block == y ]]; then
 			    succed=$(( $RANDOM % 2 ))
+
+                # checks if your block succed
 			    if [[ $succed == 1 ]]; then
 				    echo "Your block succeed, you are a bit slower"
                     speed=$(( speed - 1 ))
@@ -119,6 +128,9 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 				    echo "You took $damage damage."
                     hp=$(( hp - damage ))
 			    fi
+
+            # if player did not choose to block
+
             else
                 damage=$(( RANDOM % attackm + 1 ))
                 echo "You took $damage damage."
@@ -127,6 +139,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
             echo "Your hp: $hp"
 
+            # Check if players hp is higher than 0
             if [[ $hp -le 0 ]]; then
                 echo "YOU DIED"
                 break
@@ -139,6 +152,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
             read attackchoice
 
+            # For strong attack
             if [[ $attackchoice == 1 ]]; then
                 playerdamage=$(( RANDOM % attack + attack / 2 ))
                 echo "You strike hard for $playerdamage damage!"
@@ -146,26 +160,27 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                 if [[ $speed -lt 1 ]]; then
                     speed=1
                 fi
+            #Small attack
             else
-                    playerdamage=$(( RANDOM % (attack / 2) + 1 ))
-                    echo "You strike for $playerdamage damage!"
+                playerdamage=$(( RANDOM % (attack / 2) + 1 ))
+                echo "You strike for $playerdamage damage!"
             fi
 
+            # sets skeletons hp
             hpm=$(( hpm - playerdamage ))
 
-                if [[ $hpm -le 0 ]]; then
-                    echo ""
-                    echo "You defeated the skeleton! Victory!"
-                else
-                    echo "Skeleton hp: $hpm"
-                fi
-
+            # checks if skeleton is dead
+            if [[ $hpm -le 0 ]]; then
                 echo ""
+                echo "You defeated the skeleton! Victory!"
+            else
+                echo "Skeleton hp: $hpm"
+            fi
 
             done
 
-
         fi
+    # if player did not choose class 
     else
         echo "Choose again!"
     fi

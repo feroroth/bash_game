@@ -73,6 +73,7 @@ case $class in
         type="knight"
         hp=30
         max_hp=30
+        magicattack=0
         attack=30
         speed=10
         max_speed=10
@@ -82,14 +83,15 @@ case $class in
         hp=20
         max_hp=20
         attack=10
-        magicattack=20
+        magicattack=30
         speed=20
         max_speed=20
         ;;
     3)
         type="archer"
-        hp=20
-        max_hp=20
+        hp=25
+        max_hp=25
+        magicattack=0
         attack=20
         speed=30
         max_speed=30
@@ -99,7 +101,7 @@ case $class in
         echo "info knight:
         hp = 30
         attack = 30
-        speed = 30"
+        speed = 10"
         exit 0
         ;;
         
@@ -107,16 +109,16 @@ case $class in
         echo "info mage:
         hp = 20
         attack = 10
-        magicattack = 20
+        magicattack = 30
         speed = 20"
         exit 0
         ;;
         
     info3)
         echo "info archer:
-        hp = 20
+        hp = 25
         attack = 20
-        speed = 10"
+        speed = 30"
         exit 0
         ;;
         
@@ -284,7 +286,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
             # For strong attack
             if [[ $attackchoice == 1 ]]; then
-                playerdamage=$(( RANDOM % attack + attack / 2 ))
+                playerdamage=$(( RANDOM % attack + magicattack + attack / 2 ))
                 echo "You strike hard for $playerdamage damage!"
                 speed=$(( speed - 1 ))
 
@@ -298,7 +300,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
             #Small attack
             else
-                playerdamage=$(( RANDOM % (attack / 2) + 1 ))
+                playerdamage=$(( RANDOM % magicattack + (attack / 2) + 1 ))
                 echo "You strike for $playerdamage damage!"
             fi
 
@@ -457,7 +459,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
             # For strong attack
             if [[ $attackchoice == 1 ]]; then
-                playerdamage=$(( RANDOM % attack + attack / 2 ))
+                playerdamage=$(( RANDOM % attack + magicattack + attack / 2 ))
                 echo "You strike hard for $playerdamage damage!"
                 speed=$(( speed - 1 ))
 
@@ -472,7 +474,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
             #Small attack
             else
-                playerdamage=$(( RANDOM % (attack / 2) + 1 ))
+                playerdamage=$(( RANDOM % magicattack + (attack / 2) + 1 ))
                 echo "You strike for $playerdamage damage!"
             fi
 

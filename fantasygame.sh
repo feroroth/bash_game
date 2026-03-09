@@ -2,7 +2,7 @@
 
 echo "Choose your class:
 
-1 - knight
+    1 - knight
                    │                  
                   ─╯                  
             ╭───╮  │                  
@@ -22,10 +22,10 @@ echo "Choose your class:
     │       │││ │  │                  
     ╰───────╯╯╰─╯  │ 
 
-2 - mage
+    2 - mage
                        |
-        <<           | /_/              
-         |||         \#/              
+        <<\          | /_/              
+         ||\         \#/              
          ||||        ##               
      <<<<<< >>>>>>   #                
         ##  \        |                
@@ -41,7 +41,7 @@ echo "Choose your class:
       | |    | |     |                
       |_|__|_|_|     |
 
-3 - archer
+    3 - archer
 
                 \                       
           __    |\                      
@@ -56,12 +56,13 @@ echo "Choose your class:
        |__||__| |   /                   
        | | \  \ |  /                    
        \ /  \  \| /                     
-       | |   | ||/                      
-       \ /   | |/                       
-       ___    ___  
+       ||   | ||/                      
+       \/   | |/                       
+       /\   |____  
 
 For info about class stats type: info1, info2, info3
 "
+
 
 read class
 
@@ -71,21 +72,27 @@ case $class in
     1)
         type="knight"
         hp=30
+        max_hp=30
         attack=30
         speed=10
+        max_speed=10
         ;;
     2)
         type="mage"
         hp=20
+        max_hp=20
         attack=10
         magicattack=20
         speed=20
+        max_speed=20
         ;;
     3)
         type="archer"
         hp=20
+        max_hp=20
         attack=20
         speed=30
+        max_speed=30
         ;;
         
     info1)
@@ -119,6 +126,7 @@ case $class in
         ;;
 esac
 
+
 # first if checks what classes player choosed
 if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
     echo "You have chosen $type class, do you want to continue? (y/n)"
@@ -128,18 +136,27 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
     if [[ $yorn == y ]]; then
         echo "Starting game..."
 
-        sleep 1
-
-        echo "Welcome to land where dragons still fly and orcs still fight, you are the only one who can free this land from bad wich king which rule this land 
-        and is located in the deepest dungeons where you will be fighting creatures every man is scared to think of."
-
         sleep 2
 
-        echo "Quick rules:
-        You will fight monsters, before every fight you will see their hp and attack strength, you can block attack which will slower you a bit and you have 
-        50% chance of not getting hit.
-        During your turn you have only 2 moves, strong attack and weak attack, strong attack will make you slower, archer and mage can stike right after beast 
-        came."
+        echo "
+        Welcome to land where dragons still fly and orcs still 
+        fight, you are the only one who can free this land from 
+        bad wich king which rule this land and is located in 
+        the deepest dungeons where you will be fighting creatures 
+        every man is scared to think of."
+
+        sleep 5
+
+        echo "
+        Quick rules:
+        You will fight monsters, before every fight you will 
+        see their hp and attack strength, you can block attack 
+        which will slower you a bit and you have 50% chance 
+        of not getting hit.During your turn you have only 2 
+        moves, strong attack and weak attack, strong attack 
+        will make you slower, archer and mage can stike right 
+        after beast came.
+        "
 
         sleep 5
 
@@ -150,9 +167,23 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
         sleep 5
         clear
 
-        # Case for enemies
+        echo "First dungeon forest..."
+        echo ""
+        echo "             
+              \   __    ()                               
+            \ /__/   /\                                      
+            //      /  \                                            
+           ||       /  \                                  
+            \\ / \  /    \                                        
+             /   \                                                         
+        "
+        sleep 5
+        clear
+
+        # for loop for dungeon
         for round in 1 2 3; do
-            
+
+            # random choosing enemies from case
             enemy=$(( RANDOM % 3 ))
 
             case $enemy in
@@ -176,10 +207,22 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
             if [[ $ready == "y" ]]; then
             
-                echo "$name attacks!"
+                echo "=== $name attacks! ==="
+                echo ""
 	            echo "$name - hp = $hpm"
 	            echo "your $type - hp = $hp"
-	        
+                echo ""
+                sleep 7
+                clear
+
+                # For archer
+                if [[ $class == 3 ]]; then
+                    damage=$(( RANDOM % (attack / 2) + 1 ))
+                    hpm=$(( hpm - damage ))
+                    echo "You shooted arrow"
+                    echo "$name hp: $hpm"
+                fi
+
                 # start of a while loop, here attack beggins
                 while [[ $hp -gt 0 && $hpm -gt 0 ]]; do
             
@@ -195,8 +238,13 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 			        if [[ $succed == 1 ]]; then
 				        echo "Your block succeed, you are a bit slower"
                         speed=$(( speed - 1 ))
+
+                        # Checks speed
                         if [[ $speed -lt 1 ]]; then
-                            speed=1
+                            echo "YOU DIED"
+                            sleep 5
+                            clear
+                            break
                         fi
 			        else 
 				        echo "Your block didn't succed"
@@ -220,13 +268,17 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                     echo "YOU DIED"
                     sleep 5
                     clear
-                break
-            fi
+                    break
+                fi
+            
+            
 
             echo ""
-            echo "Your move"
+            echo "=== Your move ==="
+            echo ""
             echo "1 - strong attack - more damage, but also slows you"
             echo "2 - small attack - less damage"
+            echo ""
 
             read attackchoice
 
@@ -235,9 +287,189 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                 playerdamage=$(( RANDOM % attack + attack / 2 ))
                 echo "You strike hard for $playerdamage damage!"
                 speed=$(( speed - 1 ))
+
+                # Checks speed
                 if [[ $speed -lt 1 ]]; then
-                    speed=1
+                    echo "YOU DIED"
+                    sleep 5
+                    clear
+                    break
                 fi
+
+            #Small attack
+            else
+                playerdamage=$(( RANDOM % (attack / 2) + 1 ))
+                echo "You strike for $playerdamage damage!"
+            fi
+
+            # sets enemy hp
+            hpm=$(( hpm - playerdamage ))
+
+            # checks if enemy is dead
+            if [[ $hpm -le 0 ]]; then
+                echo ""
+                echo "You defeated the $name! Victory!"
+                sleep 5
+                clear
+            else
+                echo "$name hp: $hpm"
+            fi
+
+            done
+
+        fi
+        done
+
+        # Restoring hp to max_hp a speed to max_speed
+        echo "Your hp and speed is restored"
+        hp=$max_hp
+        speed=$max_speed
+        echo ""
+        echo "Your hp: $hp"
+        echo "Your speed: $speed"
+        sleep 5
+        clear
+
+        echo "Second dungeon cave..."
+        echo ""
+        echo " _______                                                                                                 
+              _____   \ /\                                                            
+             /######\   /\                                                                
+            (#######)  /  \                                                               
+             \#####/   /  \                                                                                                        
+              /   \   /    \                                                                
+        "
+        sleep 5
+        clear
+
+
+
+        # Second dungeon
+        for round in 1 2 3 4 5; do
+
+            # random choosing enemies from case
+            enemy=$(( RANDOM % 5 ))
+
+            case $enemy in
+                0)
+                    name="Skeleton"
+                    hpm=20
+                    attackm=5
+                    ;;
+                1)
+                    name="Goblin"
+                    hpm=15
+                    attackm=5
+                    ;;
+                2)
+                    name="Troll"
+                    hpm=30
+                    attackm=5
+                    ;;
+                3)
+                    name="Cave Troll"
+                    hpm=40
+                    attackm=10
+                    ;;
+                4)
+                    name="Spider"
+                    hpm=20
+                    attackm=10
+                    ;;
+
+            esac
+
+            if [[ $ready == "y" ]]; then
+            
+                echo "=== $name attacks! ==="
+                echo ""
+	            echo "$name - hp = $hpm"
+	            echo "your $type - hp = $hp"
+                echo ""
+                sleep 7
+                clear
+	        
+                # For archer
+                if [[ $class == 3 ]]; then
+                    damage=$(( RANDOM % (attack / 2) + 1 ))
+                    hpm=$(( hpm - damage ))
+                    echo "You shooted arrow"
+                    echo "$name hp: $hpm"
+                fi
+
+                # start of a while loop, here attack beggins
+                while [[ $hp -gt 0 && $hpm -gt 0 ]]; do
+            
+	            echo "$name is attacking, do you want to block? (y/n)"
+	            read block
+
+                # part for blocking
+
+		        if [[ $block == y ]]; then
+			        succed=$(( $RANDOM % 2 ))
+
+                    # checks if your block succed
+			        if [[ $succed == 1 ]]; then
+				        echo "Your block succeed, you are a bit slower"
+                        speed=$(( speed - 1 ))
+
+                        # Checks speed
+                        if [[ $speed -lt 1 ]]; then
+                            echo "YOU DIED"
+                            sleep 5
+                            clear
+                            break
+                        fi
+			        else 
+				        echo "Your block didn't succed"
+				        damage=$(( RANDOM % attackm + 1 ))
+				        echo "You took $damage damage."
+                        hp=$(( hp - damage ))
+			        fi
+
+                # if player did not choose to block
+
+                else
+                    damage=$(( RANDOM % attackm + 1 ))
+                    echo "You took $damage damage."
+                    hp=$(( hp - damage ))
+		        fi
+
+                echo "Your hp: $hp"
+
+                # Check if players hp is higher than 0
+                if [[ $hp -le 0 ]]; then
+                    echo "YOU DIED"
+                    sleep 5
+                    clear
+                    break
+                fi
+            
+
+            echo ""
+            echo "=== Your move ==="
+            echo ""
+            echo "1 - strong attack - more damage, but also slows you"
+            echo "2 - small attack - less damage"
+            echo ""
+
+            read attackchoice
+
+            # For strong attack
+            if [[ $attackchoice == 1 ]]; then
+                playerdamage=$(( RANDOM % attack + attack / 2 ))
+                echo "You strike hard for $playerdamage damage!"
+                speed=$(( speed - 1 ))
+
+                # Checks speed
+                if [[ $speed -lt 1 ]]; then
+                    echo "YOU DIED"
+                    sleep 5
+                    clear
+                    break
+                fi
+
+
             #Small attack
             else
                 playerdamage=$(( RANDOM % (attack / 2) + 1 ))

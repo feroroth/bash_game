@@ -93,55 +93,79 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
         read ready
 
-        if [[ $ready == "y" ]]; then
-	        
-            # deffined enemy
-            beast=kostlivec
-            hpm=10
-            attackm=5
+        sleep 5
+        clear
 
-            echo "Skeleton attacks!"
-	        echo "skeleton - hp = $hpm"
-	        echo "your $type - hp = $hp"
-	        
-            # start of a while loop, here attack beggins
-            while [[ $hp -gt 0 && $hpm -gt 0 ]]; do
+        # Case for enemies
+        for round in 1 2 3; do
             
-	        echo "skeleton is attacking, do you want to block? (y/n)"
-	        read block
+            enemy=$(( RANDOM % 3 ))
 
-            # part for blocking
+            case $enemy in
+                0)
+                    name="Skeleton"
+                    hpm=20
+                    attackm=5
+                    ;;
+                1)
+                    name="Goblin"
+                    hpm=15
+                    attackm=5
+                    ;;
+                2)
+                    name="Troll"
+                    hpm=30
+                    attackm=5
+                    ;;
 
-		    if [[ $block == y ]]; then
-			    succed=$(( $RANDOM % 2 ))
+            esac
 
-                # checks if your block succed
-			    if [[ $succed == 1 ]]; then
-				    echo "Your block succeed, you are a bit slower"
-                    speed=$(( speed - 1 ))
-                    if [[ $speed -lt 1 ]]; then
-                        speed=1
-                    fi
-			    else 
-				    echo "Your block didn't succed"
-				    damage=$(( RANDOM % attackm + 1 ))
-				    echo "You took $damage damage."
+            if [[ $ready == "y" ]]; then
+            
+                echo "$name attacks!"
+	            echo "$name - hp = $hpm"
+	            echo "your $type - hp = $hp"
+	        
+                # start of a while loop, here attack beggins
+                while [[ $hp -gt 0 && $hpm -gt 0 ]]; do
+            
+	            echo "$name is attacking, do you want to block? (y/n)"
+	            read block
+
+                # part for blocking
+
+		        if [[ $block == y ]]; then
+			        succed=$(( $RANDOM % 2 ))
+
+                    # checks if your block succed
+			        if [[ $succed == 1 ]]; then
+				        echo "Your block succeed, you are a bit slower"
+                        speed=$(( speed - 1 ))
+                        if [[ $speed -lt 1 ]]; then
+                            speed=1
+                        fi
+			        else 
+				        echo "Your block didn't succed"
+				        damage=$(( RANDOM % attackm + 1 ))
+				        echo "You took $damage damage."
+                        hp=$(( hp - damage ))
+			        fi
+
+                # if player did not choose to block
+
+                else
+                    damage=$(( RANDOM % attackm + 1 ))
+                    echo "You took $damage damage."
                     hp=$(( hp - damage ))
-			    fi
+		        fi
 
-            # if player did not choose to block
+                echo "Your hp: $hp"
 
-            else
-                damage=$(( RANDOM % attackm + 1 ))
-                echo "You took $damage damage."
-                hp=$(( hp - damage ))
-		    fi
-
-            echo "Your hp: $hp"
-
-            # Check if players hp is higher than 0
-            if [[ $hp -le 0 ]]; then
-                echo "YOU DIED"
+                # Check if players hp is higher than 0
+                if [[ $hp -le 0 ]]; then
+                    echo "YOU DIED"
+                    sleep 5
+                    clear
                 break
             fi
 
@@ -166,20 +190,24 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                 echo "You strike for $playerdamage damage!"
             fi
 
-            # sets skeletons hp
+            # sets enemy hp
             hpm=$(( hpm - playerdamage ))
 
-            # checks if skeleton is dead
+            # checks if enemy is dead
             if [[ $hpm -le 0 ]]; then
                 echo ""
-                echo "You defeated the skeleton! Victory!"
+                echo "You defeated the $name! Victory!"
+                sleep 5
+                clear
             else
-                echo "Skeleton hp: $hpm"
+                echo "$name hp: $hpm"
             fi
 
             done
 
         fi
+        done
+    
     # if player did not choose class 
     else
         echo "Choose again!"
@@ -190,7 +218,7 @@ fi
 
 
 
-# logika hry zatiaľ
+
 
 
 

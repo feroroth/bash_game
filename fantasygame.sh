@@ -311,7 +311,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                 fi
                 # Calling a fight function
                 fight      
-        fi
+            fi
         done
 
         # Restoring hp to max_hp a speed to max_speed
@@ -332,7 +332,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
           \|/_ /######\   /\                                                                
           //  (#######)  /  \                                                               
          ||    \#####/   /  \                                                                                                        
-          \\    /   \   /    \                                                                
+           \\    /   \   /    \                                                                
         "
         sleep 5
         clear
@@ -391,9 +391,9 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
             fight
         done
     
-    # if player did not choose class 
-    else
-        echo "Choose again!"
+    # if player did not choose class
+    else 
+        break 
     fi
 fi
 

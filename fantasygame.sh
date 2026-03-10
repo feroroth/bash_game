@@ -405,7 +405,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
         clear
 
         # Second dungeon
-        for round in 1 2 3 4 5; do
+        for round in 1 2 3 4; do
 
             # random choosing enemies from case
             enemy=$(( RANDOM % 5 ))
@@ -428,7 +428,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                     ;;
                 3)
                     name="Cave Troll"
-                    hpm=40
+                    hpm=35
                     attackm=10
                     ;;
                 4)
@@ -445,6 +445,59 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                 break
             fi
         done
+
+        # Checking if player is dead
+        if [[ $dead -eq 1 ]]; then
+            exit 0
+        fi
+
+        # Restoring hp to max_hp a speed to max_speed
+        restore
+
+        echo "Third dungeon catacombs..."
+        echo ""
+        echo "
+          _______________                                                                                                   
+           @ @_______@ @                                                                
+           | |###|###| |                                                                  
+           | |###|*##| |                                                                  
+           | |###|###| |                                                                                                            
+               /   \                                                                       
+        "
+        sleep 5
+        clear
+
+        # Third dungeon
+        for round in 1 2 3 4 5 6 7 8; do
+
+            # random choosing enemies from case
+            enemy=$(( RANDOM % 2 ))
+
+            case $enemy in
+                0)
+                    name="Skeleton"
+                    hpm=20
+                    attackm=5
+                    ;;
+                1)
+                    name="Undead"
+                    hpm=25
+                    attackm=5
+                    ;;
+            esac
+            
+            # Calling a fight function
+            fight
+
+            if [[ $dead -eq 1 ]]; then
+                break
+            fi
+        done
+
+        # Checking if player is dead
+        if [[ $dead -eq 1 ]]; then
+            exit 0
+        fi
     
     # if player did not choose class
     else 

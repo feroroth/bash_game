@@ -121,7 +121,40 @@ case $class in
         ;;
 esac
 
+# Archer move function
+archermove() {
+    if [[ $class == 3 ]]; then
+        damage=$(( RANDOM % (attack / 2) + 1 ))
+        hpm=$(( hpm - damage ))
+        echo "You shooted arrow"
+        echo "$name hp: $hpm"
+    fi
+}
+
+# For checking players speed
+speedcheck() {
+    if [[ $speed -lt 1 ]]; then
+        echo "YOU DIED"
+        sleep 5
+        clear
+        break
+    fi
+}
+
 fight() {
+    # Beggining of attack
+    echo "=== $name attacks! ==="
+    echo ""
+	echo "$name - hp = $hpm"
+	echo "your $type - hp = $hp"
+    echo ""
+    sleep 7
+    clear
+
+    # calling archers move
+    archermove 
+
+    # While loop for fight until someone dies
     while [[ $hp -gt 0 && $hpm -gt 0 ]]; do
             
 	    echo "$name is attacking, do you want to block? (y/n)"
@@ -137,12 +170,7 @@ fight() {
                 speed=$(( speed - 1 ))
 
                 # Checks speed
-                if [[ $speed -lt 1 ]]; then
-                    echo "YOU DIED"
-                    sleep 5
-                    clear
-                    break
-                fi
+                speedcheck
 
             # if block did not succed
             else 
@@ -185,12 +213,7 @@ fight() {
             speed=$(( speed - 1 ))
 
             # Checks speed
-            if [[ $speed -lt 1 ]]; then
-                echo "YOU DIED"
-                sleep 5
-                clear
-                break
-            fi
+            speedcheck
 
         #Small attack
         else
@@ -212,6 +235,18 @@ fight() {
         fi
 
     done
+}
+
+# function for restoring hp and speed
+restore() {
+    echo "Your hp and speed is restored"
+    hp=$max_hp
+    speed=$max_speed
+    echo ""
+    echo "Your hp: $hp"
+    echo "Your speed: $speed"
+    sleep 5
+    clear
 }
 
 # first if checks what classes player choosed
@@ -294,35 +329,13 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
             # Checks if player is ready
             if [[ $ready == "y" ]]; then
             
-                echo "=== $name attacks! ==="
-                echo ""
-	            echo "$name - hp = $hpm"
-	            echo "your $type - hp = $hp"
-                echo ""
-                sleep 7
-                clear
-
-                # Attack for archer
-                if [[ $class == 3 ]]; then
-                    damage=$(( RANDOM % (attack / 2) + 1 ))
-                    hpm=$(( hpm - damage ))
-                    echo "You shooted arrow"
-                    echo "$name hp: $hpm"
-                fi
                 # Calling a fight function
                 fight      
             fi
         done
 
         # Restoring hp to max_hp a speed to max_speed
-        echo "Your hp and speed is restored"
-        hp=$max_hp
-        speed=$max_speed
-        echo ""
-        echo "Your hp: $hp"
-        echo "Your speed: $speed"
-        sleep 5
-        clear
+        restore
 
         echo "Second dungeon cave..."
         echo ""
@@ -371,22 +384,6 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                     ;;
             esac
             
-            echo "=== $name attacks! ==="
-            echo ""
-	        echo "$name - hp = $hpm"
-            echo "your $type - hp = $hp"
-            echo ""
-            sleep 7
-            clear
-	        
-            # Attack for archer
-            if [[ $class == 3 ]]; then
-                damage=$(( RANDOM % (attack / 2) + 1 ))
-                hpm=$(( hpm - damage ))
-                echo "You shooted arrow"
-                echo "$name hp: $hpm"
-            fi
-
             # Calling a fight function
             fight
         done

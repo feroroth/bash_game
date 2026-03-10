@@ -1,5 +1,24 @@
 #!/bin/bash
 
+echo "
+         #  #    ###    ###    #     ####  #   #                                   
+      ########  ##     #   #  ##    #     #   #                                       
+       #  #    #      # ##   # #   ####  #####                    
+    ########         #   #  ####     #  #   #                        
+     #  #    #      ###    #   # ####  #   #  
+
+                     ######  #      #  #     ######                                                                         
+                    #       ##     ## ##    #                                                                                          
+                   #  ##   # #    # ## #   ####                                     
+                  #    #  ####   #  #  #  #                             
+                 ######  #   #  #      # ######                                   
+
+loading ...                                                                                                                                   
+"
+
+sleep 10
+clear
+
 echo "Choose your class:
 
     1 - knight
@@ -145,8 +164,8 @@ fight() {
     # Beggining of attack
     echo "=== $name attacks! ==="
     echo ""
-	echo "$name - hp = $hpm"
-	echo "your $type - hp = $hp"
+    echo "$name - hp = $hpm"
+    echo "your $type - hp = $hp"
     echo ""
     sleep 7
     clear

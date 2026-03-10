@@ -202,6 +202,12 @@ fight() {
         echo ""
         echo "1 - strong attack - more damage, but also slows you"
         echo "2 - small attack - less damage"
+
+        # for mage heal
+        if [[ $class == 2 ]]; then
+            echo "3 - heal 5 hp"
+        fi
+
         echo ""
 
         read attackchoice
@@ -216,9 +222,18 @@ fight() {
             speedcheck
 
         #Small attack
-        else
+        elif [[ $attackchoice == 2]]; then
             playerdamage=$(( RANDOM % magicattack + (attack / 2) + 1 ))
             echo "You strike for $playerdamage damage!"
+
+        # mage selfheal
+        elif [[ $attackchoice == 3 && $class == 2]]; then
+            hp=$(( hp + 5 ))
+            echo "You healed, your hp: $hp"
+
+        # pre neplatný výber
+        else
+            echo "miss"
         fi
 
         # sets enemy hp

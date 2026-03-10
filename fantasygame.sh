@@ -63,18 +63,16 @@ echo "Choose your class:
 For info about class stats type: info1, info2, info3
 "
 
-
 read class
 
 # classes
-
 case $class in
     1)
         type="knight"
         hp=30
         max_hp=30
-        magicattack=0
-        attack=30
+        magicattack=1
+        attack=29
         speed=10
         max_speed=10
         ;;
@@ -91,8 +89,8 @@ case $class in
         type="archer"
         hp=25
         max_hp=25
-        magicattack=0
-        attack=20
+        magicattack=1
+        attack=19
         speed=30
         max_speed=30
         ;;
@@ -128,6 +126,98 @@ case $class in
         ;;
 esac
 
+fight() {
+    while [[ $hp -gt 0 && $hpm -gt 0 ]]; do
+            
+	    echo "$name is attacking, do you want to block? (y/n)"
+	    read block
+
+        # part for blocking
+		if [[ $block == y ]]; then
+		succed=$(( $RANDOM % 2 ))
+
+            # checks if your block succed
+		    if [[ $succed == 1 ]]; then
+				echo "Your block succeed, you are a bit slower"
+                speed=$(( speed - 1 ))
+
+                # Checks speed
+                if [[ $speed -lt 1 ]]; then
+                    echo "YOU DIED"
+                    sleep 5
+                    clear
+                    break
+                fi
+
+            # if block did not succed
+            else 
+			    echo "Your block didn't succed"
+		        damage=$(( RANDOM % attackm + 1 ))
+		        echo "You took $damage damage."
+                hp=$(( hp - damage ))
+		    fi
+
+        # if player did not choose to block
+        else
+            damage=$(( RANDOM % attackm + 1 ))
+            echo "You took $damage damage."
+            hp=$(( hp - damage ))
+	    fi
+
+        echo "Your hp: $hp"
+
+        # Check if players hp is higher than 0
+        if [[ $hp -le 0 ]]; then
+            echo "YOU DIED"
+            sleep 5
+            clear
+            break
+        fi
+            
+        echo ""
+        echo "=== Your move ==="
+        echo ""
+        echo "1 - strong attack - more damage, but also slows you"
+        echo "2 - small attack - less damage"
+        echo ""
+
+        read attackchoice
+
+        # For strong attack
+        if [[ $attackchoice == 1 ]]; then
+            playerdamage=$(( RANDOM % attack + magicattack + attack / 2 ))
+            echo "You strike hard for $playerdamage damage!"
+            speed=$(( speed - 1 ))
+
+            # Checks speed
+            if [[ $speed -lt 1 ]]; then
+                echo "YOU DIED"
+                sleep 5
+                clear
+                break
+            fi
+
+        #Small attack
+        else
+            playerdamage=$(( RANDOM % magicattack + (attack / 2) + 1 ))
+            echo "You strike for $playerdamage damage!"
+        fi
+
+        # sets enemy hp
+        hpm=$(( hpm - playerdamage ))
+
+        # checks if enemy is dead
+        if [[ $hpm -le 0 ]]; then
+            echo ""
+            echo "You defeated the $name! Victory!"
+            sleep 5
+            clear
+        else
+            echo "$name hp: $hpm"
+        fi
+
+    done
+}
 
 # first if checks what classes player choosed
 if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
@@ -207,6 +297,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
             esac
 
+            # Checks if player is ready
             if [[ $ready == "y" ]]; then
             
                 echo "=== $name attacks! ==="
@@ -217,7 +308,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                 sleep 7
                 clear
 
-                # For archer
+                # Attack for archer
                 if [[ $class == 3 ]]; then
                     damage=$(( RANDOM % (attack / 2) + 1 ))
                     hpm=$(( hpm - damage ))
@@ -225,99 +316,8 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                     echo "$name hp: $hpm"
                 fi
 
-                # start of a while loop, here attack beggins
-                while [[ $hp -gt 0 && $hpm -gt 0 ]]; do
-            
-	            echo "$name is attacking, do you want to block? (y/n)"
-	            read block
-
-                # part for blocking
-
-		        if [[ $block == y ]]; then
-			        succed=$(( $RANDOM % 2 ))
-
-                    # checks if your block succed
-			        if [[ $succed == 1 ]]; then
-				        echo "Your block succeed, you are a bit slower"
-                        speed=$(( speed - 1 ))
-
-                        # Checks speed
-                        if [[ $speed -lt 1 ]]; then
-                            echo "YOU DIED"
-                            sleep 5
-                            clear
-                            break
-                        fi
-			        else 
-				        echo "Your block didn't succed"
-				        damage=$(( RANDOM % attackm + 1 ))
-				        echo "You took $damage damage."
-                        hp=$(( hp - damage ))
-			        fi
-
-                # if player did not choose to block
-
-                else
-                    damage=$(( RANDOM % attackm + 1 ))
-                    echo "You took $damage damage."
-                    hp=$(( hp - damage ))
-		        fi
-
-                echo "Your hp: $hp"
-
-                # Check if players hp is higher than 0
-                if [[ $hp -le 0 ]]; then
-                    echo "YOU DIED"
-                    sleep 5
-                    clear
-                    break
-                fi
-            
-            
-
-            echo ""
-            echo "=== Your move ==="
-            echo ""
-            echo "1 - strong attack - more damage, but also slows you"
-            echo "2 - small attack - less damage"
-            echo ""
-
-            read attackchoice
-
-            # For strong attack
-            if [[ $attackchoice == 1 ]]; then
-                playerdamage=$(( RANDOM % attack + magicattack + attack / 2 ))
-                echo "You strike hard for $playerdamage damage!"
-                speed=$(( speed - 1 ))
-
-                # Checks speed
-                if [[ $speed -lt 1 ]]; then
-                    echo "YOU DIED"
-                    sleep 5
-                    clear
-                    break
-                fi
-
-            #Small attack
-            else
-                playerdamage=$(( RANDOM % magicattack + (attack / 2) + 1 ))
-                echo "You strike for $playerdamage damage!"
-            fi
-
-            # sets enemy hp
-            hpm=$(( hpm - playerdamage ))
-
-            # checks if enemy is dead
-            if [[ $hpm -le 0 ]]; then
-                echo ""
-                echo "You defeated the $name! Victory!"
-                sleep 5
-                clear
-            else
-                echo "$name hp: $hpm"
-            fi
-
-            done
+                fight
+                
 
         fi
         done
@@ -334,12 +334,13 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
         echo "Second dungeon cave..."
         echo ""
-        echo " _______                                                                                                 
-              _____   \ /\                                                            
-             /######\   /\                                                                
-            (#######)  /  \                                                               
-             \#####/   /  \                                                                                                        
-              /   \   /    \                                                                
+        echo "
+            _ __________                                                                                                 
+         _ / _  _____   \ /\                                                            
+          \|/_ /######\   /\                                                                
+          //  (#######)  /  \                                                               
+         ||    \#####/   /  \                                                                                                        
+          \\    /   \   /    \                                                                
         "
         sleep 5
         clear
@@ -378,122 +379,27 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                     hpm=20
                     attackm=10
                     ;;
-
             esac
-
-            if [[ $ready == "y" ]]; then
             
-                echo "=== $name attacks! ==="
-                echo ""
-	            echo "$name - hp = $hpm"
-	            echo "your $type - hp = $hp"
-                echo ""
-                sleep 7
-                clear
+            echo "=== $name attacks! ==="
+            echo ""
+	        echo "$name - hp = $hpm"
+            echo "your $type - hp = $hp"
+            echo ""
+            sleep 7
+            clear
 	        
-                # For archer
-                if [[ $class == 3 ]]; then
-                    damage=$(( RANDOM % (attack / 2) + 1 ))
-                    hpm=$(( hpm - damage ))
-                    echo "You shooted arrow"
-                    echo "$name hp: $hpm"
-                fi
-
-                # start of a while loop, here attack beggins
-                while [[ $hp -gt 0 && $hpm -gt 0 ]]; do
-            
-	            echo "$name is attacking, do you want to block? (y/n)"
-	            read block
-
-                # part for blocking
-
-		        if [[ $block == y ]]; then
-			        succed=$(( $RANDOM % 2 ))
-
-                    # checks if your block succed
-			        if [[ $succed == 1 ]]; then
-				        echo "Your block succeed, you are a bit slower"
-                        speed=$(( speed - 1 ))
-
-                        # Checks speed
-                        if [[ $speed -lt 1 ]]; then
-                            echo "YOU DIED"
-                            sleep 5
-                            clear
-                            break
-                        fi
-			        else 
-				        echo "Your block didn't succed"
-				        damage=$(( RANDOM % attackm + 1 ))
-				        echo "You took $damage damage."
-                        hp=$(( hp - damage ))
-			        fi
-
-                # if player did not choose to block
-
-                else
-                    damage=$(( RANDOM % attackm + 1 ))
-                    echo "You took $damage damage."
-                    hp=$(( hp - damage ))
-		        fi
-
-                echo "Your hp: $hp"
-
-                # Check if players hp is higher than 0
-                if [[ $hp -le 0 ]]; then
-                    echo "YOU DIED"
-                    sleep 5
-                    clear
-                    break
-                fi
-            
-
-            echo ""
-            echo "=== Your move ==="
-            echo ""
-            echo "1 - strong attack - more damage, but also slows you"
-            echo "2 - small attack - less damage"
-            echo ""
-
-            read attackchoice
-
-            # For strong attack
-            if [[ $attackchoice == 1 ]]; then
-                playerdamage=$(( RANDOM % attack + magicattack + attack / 2 ))
-                echo "You strike hard for $playerdamage damage!"
-                speed=$(( speed - 1 ))
-
-                # Checks speed
-                if [[ $speed -lt 1 ]]; then
-                    echo "YOU DIED"
-                    sleep 5
-                    clear
-                    break
-                fi
-
-
-            #Small attack
-            else
-                playerdamage=$(( RANDOM % magicattack + (attack / 2) + 1 ))
-                echo "You strike for $playerdamage damage!"
-            fi
-
-            # sets enemy hp
-            hpm=$(( hpm - playerdamage ))
-
-            # checks if enemy is dead
-            if [[ $hpm -le 0 ]]; then
-                echo ""
-                echo "You defeated the $name! Victory!"
-                sleep 5
-                clear
-            else
+            # Attack for archer
+            if [[ $class == 3 ]]; then
+                damage=$(( RANDOM % (attack / 2) + 1 ))
+                hpm=$(( hpm - damage ))
+                echo "You shooted arrow"
                 echo "$name hp: $hpm"
             fi
 
-            done
+            # Calling a fight function
+            fight
 
-        fi
         done
     
     # if player did not choose class 

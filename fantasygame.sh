@@ -154,11 +154,15 @@ archermove() {
 speedcheck() {
     if [[ $speed -lt 1 ]]; then
         echo "YOU DIED"
+        dead=1
         sleep 5
         clear
-        break
+        return 1
     fi
+    return 0
 }
+
+dead=0
 
 fight() {
     # Beggining of attack
@@ -189,7 +193,7 @@ fight() {
                 speed=$(( speed - 1 ))
 
                 # Checks speed
-                speedcheck
+                speedcheck || break
 
             # if block did not succed
             else 
@@ -211,6 +215,7 @@ fight() {
         # Check if players hp is higher than 0
         if [[ $hp -le 0 ]]; then
             echo "YOU DIED"
+            dead=1
             sleep 5
             clear
             break
@@ -238,18 +243,22 @@ fight() {
             speed=$(( speed - 1 ))
 
             # Checks speed
-            speedcheck
+            speedcheck || break
 
         #Small attack
-        elif [[ $attackchoice == 2]]; then
+        elif [[ $attackchoice == 2 ]]; then
             playerdamage=$(( RANDOM % magicattack + (attack / 2) + 1 ))
             echo "You strike for $playerdamage damage!"
 
         # mage selfheal
-        elif [[ $attackchoice == 3 && $class == 2]]; then
+        elif [[ $attackchoice == 3 && $class == 2 ]]; then
             hp=$(( hp + 5 ))
+            # Fix for infinite hp
+            if [[ $hp -gt $max_hp ]]; then
+                hp=$max_hp
+            fi
             echo "You healed, your hp: $hp"
-
+            playerdamage=0
         # pre neplatný výber
         else
             echo "miss"
@@ -368,6 +377,11 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
             fi
         done
 
+        # Checking if player is dead
+        if [[ $dead -eq 1 ]]; then
+            exit 0
+        fi
+
         # Restoring hp to max_hp a speed to max_speed
         restore
 
@@ -424,7 +438,8 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
     
     # if player did not choose class
     else 
-        break 
+        echo "Choose again!"
+        exit 0 
     fi
 fi
 

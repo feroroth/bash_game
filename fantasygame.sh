@@ -62,7 +62,6 @@ echo "Choose your class:
 
 For info about class stats type: info1, info2, info3
 "
-
 read class
 
 # classes
@@ -93,16 +92,14 @@ case $class in
         attack=19
         speed=30
         max_speed=30
-        ;;
-        
+        ;;  
     info1)
         echo "info knight:
         hp = 30
         attack = 30
         speed = 10"
         exit 0
-        ;;
-        
+        ;;    
     info2)
         echo "info mage:
         hp = 20
@@ -110,16 +107,14 @@ case $class in
         magicattack = 30
         speed = 20"
         exit 0
-        ;;
-        
+        ;;    
     info3)
         echo "info archer:
         hp = 25
         attack = 20
         speed = 30"
         exit 0
-        ;;
-        
+        ;;   
     *)
         echo "Invalid choice!"
         exit 1
@@ -294,7 +289,6 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                     hpm=30
                     attackm=5
                     ;;
-
             esac
 
             # Checks if player is ready
@@ -315,10 +309,8 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                     echo "You shooted arrow"
                     echo "$name hp: $hpm"
                 fi
-
-                fight
-                
-
+                # Calling a fight function
+                fight      
         fi
         done
 
@@ -344,8 +336,6 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
         "
         sleep 5
         clear
-
-
 
         # Second dungeon
         for round in 1 2 3 4 5; do
@@ -399,7 +389,6 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
             # Calling a fight function
             fight
-
         done
     
     # if player did not choose class 

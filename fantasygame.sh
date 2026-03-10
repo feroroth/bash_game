@@ -165,6 +165,8 @@ speedcheck() {
 dead=0
 
 fight() {
+
+    playerdamage=0
     # Beggining of attack
     echo "=== $name attacks! ==="
     echo ""
@@ -373,7 +375,11 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
             if [[ $ready == "y" ]]; then
             
                 # Calling a fight function
-                fight      
+                fight 
+                
+                if [[ $dead -eq 1 ]]; then
+                    break
+                fi     
             fi
         done
 
@@ -434,6 +440,10 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
             
             # Calling a fight function
             fight
+
+            if [[ $dead -eq 1 ]]; then
+                break
+            fi
         done
     
     # if player did not choose class

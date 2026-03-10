@@ -153,7 +153,8 @@ archermove() {
 # For checking players speed
 speedcheck() {
     if [[ $speed -lt 1 ]]; then
-        echo "YOU DIED"
+        echo ""
+        echo "=== YOU DIED ==="
         dead=1
         sleep 5
         clear
@@ -216,7 +217,8 @@ fight() {
 
         # Check if players hp is higher than 0
         if [[ $hp -le 0 ]]; then
-            echo "YOU DIED"
+            echo ""
+            echo "=== YOU DIED ==="
             dead=1
             sleep 5
             clear
@@ -306,7 +308,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
         sleep 2
 
         echo "
-        Welcome to land where dragons still fly and orcs still 
+            Welcome to land where dragons still fly and orcs still 
         fight, you are the only one who can free this land from 
         bad wich king which rule this land and is located in 
         the deepest dungeons where you will be fighting creatures 
@@ -316,7 +318,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
         echo "
         Quick rules:
-        You will fight monsters, before every fight you will 
+            You will fight monsters, before every fight you will 
         see their hp and attack strength, you can block attack 
         which will slower you a bit and you have 50% chance 
         of not getting hit.During your turn you have only 2 
@@ -505,17 +507,4 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
         exit 0 
     fi
 fi
-
-
-
-
-
-
-
-
-
-
-
-
-
 

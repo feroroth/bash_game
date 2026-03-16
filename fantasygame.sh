@@ -181,8 +181,8 @@ fight() {
     archermove 
 
     # While loop for fight until someone dies
-    while [[ $hp -gt 0 && $hpm -gt 0 ]]; do
-            
+    while [[ $hp -gt 0 && $hpm -gt 0 ]]; do   
+        
 	    echo "$name is attacking, do you want to block? (y/n)"
 	    read block
 
@@ -381,7 +381,12 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                 
                 if [[ $dead -eq 1 ]]; then
                     break
-                fi     
+                fi
+
+            # if player pressed anything else than y    
+            elif [[ $ready != "y" ]]; then 
+                echo "Goodbye!"
+                exit 0         
             fi
         done
 
@@ -501,11 +506,40 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
         if [[ $dead -eq 1 ]]; then
             exit 0
         fi
-    
-    # if player did not choose class
-    else 
-        echo "Choose again!"
-        exit 0 
+
+        # Restoring hp to max_hp a speed to max_speed
+        restore
+
+        echo "BOSS FIGHT"
+        echo ""
+        echo "
+           
+             \
+            / \
+         __/___\__      ##
+           | * *       ## 
+           #####     / 
+            ####   /
+            #### /
+              /
+           /
+        "
+        sleep 5
+        clear
+
+        # Third dungeon
+        # boss stats
+        name="BOSS"
+        hpm=40
+        attackm=10
+            
+        # Calling a fight function
+        fight
+        
+        # Checking if player is dead
+        if [[ $dead -eq 1 ]]; then
+            exit 0
+        fi
     fi
 fi
 

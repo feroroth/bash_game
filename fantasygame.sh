@@ -56,7 +56,10 @@ for i in 1 2; do
     clear
 done
 
-echo "Choose your class:
+# while loop for choosing class
+# runs until player choose class
+while true; do
+    echo "Choose your class:
 
     1 - knight
                    │                  
@@ -77,10 +80,10 @@ echo "Choose your class:
     │       │││ │  │                  
     │       │││ │  │                  
     ╰───────╯╯╰─╯  │ 
-"
-sleep 3
+    "
+    sleep 3
 
-echo "
+    echo "
     2 - mage
                        |
         <<\          | /_/              
@@ -99,10 +102,10 @@ echo "
       |  \__ | |     |                
       | |    | |     |                
       |_|__|_|_|     |
-"
-sleep 3
+    "
+    sleep 3
 
-echo "
+    echo "
     3 - archer
 
                 \                       
@@ -121,70 +124,70 @@ echo "
        ||   | ||/                      
        \/   | |/                       
        /\   |___\  
-"
-sleep 3
+    "
+    sleep 3
 
-echo "
-For info about class stats type: info1, info2, info3
-"
-read class
+    echo "
+    For info about class stats type: info1, info2, info3
+    "
+    read class
 
-# classes
-case $class in
-    1)
-        type="knight"
-        hp=30
-        max_hp=30
-        magicattack=1
-        attack=29
-        speed=10
-        max_speed=10
-        ;;
-    2)
-        type="mage"
-        hp=20
-        max_hp=20
-        attack=10
-        magicattack=30
-        speed=20
-        max_speed=20
-        ;;
-    3)
-        type="archer"
-        hp=25
-        max_hp=25
-        magicattack=1
-        attack=19
-        speed=30
-        max_speed=30
-        ;;  
-    info1)
-        echo "info knight:
-        hp = 30
-        attack = 30
-        speed = 10"
-        exit 0
-        ;;    
-    info2)
-        echo "info mage:
-        hp = 20
-        attack = 10
-        magicattack = 30
-        speed = 20"
-        exit 0
-        ;;    
-    info3)
-        echo "info archer:
-        hp = 25
-        attack = 20
-        speed = 30"
-        exit 0
-        ;;   
-    *)
-        echo "Invalid choice!"
-        exit 1
-        ;;
-esac
+    # classes
+    case $class in
+        1)
+            type="knight"
+            hp=30
+            max_hp=30
+            magicattack=1
+            attack=29
+            speed=10
+            max_speed=10
+            break
+            ;;
+        2)
+            type="mage"
+            hp=20
+            max_hp=20
+            attack=10
+            magicattack=30
+            speed=20
+            max_speed=20
+            break
+            ;;
+        3)
+            type="archer"
+            hp=25
+            max_hp=25
+            magicattack=1
+            attack=19
+            speed=30
+            max_speed=30
+            break
+            ;;  
+        info1)
+            echo "info knight:
+            hp = 30
+            attack = 30
+            speed = 10"
+            ;;    
+        info2)
+            echo "info mage:
+            hp = 20
+            attack = 10
+            magicattack = 30
+            speed = 20"
+            ;;    
+        info3)
+            echo "info archer:
+            hp = 25
+            attack = 20
+            speed = 30"
+            ;;   
+        *)
+            echo "Invalid choice!"
+            ;;
+    esac
+done
 
 # Archer move function
 # Archer only shoots once before each battle
@@ -233,6 +236,7 @@ fight() {
 	    echo "$name is attacking, do you want to block? (y/n)"
 	    read block
 
+        # if speeds drops on less than half, affect block
         if [[ $speed -le $((max_speed / 2)) ]]; then
             speedfall=1
         else

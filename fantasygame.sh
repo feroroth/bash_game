@@ -58,10 +58,10 @@ done
 
 # while loop for choosing class
 # runs until player choose class
-while true; do
-    echo "Choose your class:
 
-    1 - knight
+echo "Choose your class:
+
+1 - knight
                    │                  
                   ─╯                  
             ╭───╮  │                  
@@ -81,9 +81,9 @@ while true; do
     │       │││ │  │                  
     ╰───────╯╯╰─╯  │ 
     "
-    sleep 3
+sleep 3
 
-    echo "
+echo "
     2 - mage
                        |
         <<\          | /_/              
@@ -103,9 +103,9 @@ while true; do
       | |    | |     |                
       |_|__|_|_|     |
     "
-    sleep 3
+sleep 3
 
-    echo "
+echo "
     3 - archer
 
                 \                       
@@ -124,12 +124,13 @@ while true; do
        ||   | ||/                      
        \/   | |/                       
        /\   |___\  
-    "
-    sleep 3
+"
+sleep 3
 
-    echo "
-    For info about class stats type: info1, info2, info3
-    "
+echo "
+For info about class stats type: info1, info2, info3
+"
+while true; do
     read class
 
     # classes
@@ -165,20 +166,23 @@ while true; do
             break
             ;;  
         info1)
-            echo "info knight:
+            echo "
+            info knight:
             hp = 30
             attack = 30
             speed = 10"
             ;;    
         info2)
-            echo "info mage:
+            echo "
+            info mage:
             hp = 20
             attack = 10
             magicattack = 30
             speed = 20"
             ;;    
         info3)
-            echo "info archer:
+            echo "
+            info archer:
             hp = 25
             attack = 20
             speed = 30"

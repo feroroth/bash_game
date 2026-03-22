@@ -187,6 +187,7 @@ case $class in
 esac
 
 # Archer move function
+# Archer only shoots once before each battle
 archermove() {
     if [[ $class == 3 ]]; then
         damage=$(( RANDOM % (attack / 2) + 1 ))
@@ -232,9 +233,15 @@ fight() {
 	    echo "$name is attacking, do you want to block? (y/n)"
 	    read block
 
+        if [[ $speed -le $((max_speed / 2)) ]]; then
+            speedfall=1
+        else
+            speedfall=0
+        fi
+
         # part for blocking
 		if [[ $block == y ]]; then
-		succed=$(( $RANDOM % 2 ))
+		succed=$(( $RANDOM % (2 + speedfall)))
 
             # checks if your block succed
 		    if [[ $succed == 1 ]]; then
@@ -288,7 +295,7 @@ fight() {
 
         # For strong attack
         if [[ $attackchoice == 1 ]]; then
-            playerdamage=$(( RANDOM % attack + magicattack + attack / 2 ))
+            playerdamage=$(( RANDOM % (attack + magicattack) + attack / 2 ))
             echo "You strike hard for $playerdamage damage!"
             speed=$(( speed - 1 ))
 
@@ -297,7 +304,7 @@ fight() {
 
         #Small attack
         elif [[ $attackchoice == 2 ]]; then
-            playerdamage=$(( RANDOM % magicattack + (attack / 2) + 1 ))
+            playerdamage=$(( RANDOM % (magicattack + (attack / 2)) + 1 ))
             echo "You strike for $playerdamage damage!"
 
         # mage selfheal
@@ -586,6 +593,9 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
         if [[ $dead -eq 1 ]]; then
             exit 0
         fi
+
+        echo "=== YOU WON! ==="
+        sleep 10
     fi
 fi
 

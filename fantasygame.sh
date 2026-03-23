@@ -536,7 +536,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
             done
 
             # Ending while loop if you are alive
-            if [[ $dead -eq 1 ]]; then
+            if [[ $dead -eq 0 ]]; then
                 break
             fi
 

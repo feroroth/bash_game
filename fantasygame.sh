@@ -405,56 +405,70 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
             //      /  \    
            ||       /  \ 
             \\ / \  /    \
-             /   \     
+             /   \ 
+
+        checkpoint    
         "
         sleep 5
         clear
 
-        # for loop for dungeon
-        for round in 1 2 3; do
 
-            # random choosing enemies from case
-            enemy=$(( RANDOM % 3 ))
+        # while loop for dungeon
+        # if you die you have to repeat dungeon
+        while true; do
+            # for loop for dungeon
+            for round in 1 2 3; do
 
-            case $enemy in
-                0)
-                    name="Skeleton"
-                    hpm=20
-                    attackm=5
-                    ;;
-                1)
-                    name="Goblin"
-                    hpm=15
-                    attackm=5
-                    ;;
-                2)
-                    name="Troll"
-                    hpm=30
-                    attackm=5
-                    ;;
-            esac
+                # random choosing enemies from case
+                enemy=$(( RANDOM % 3 ))
 
-            # Checks if player is ready
-            if [[ $ready == "y" ]]; then
+                case $enemy in
+                    0)
+                        name="Skeleton"
+                        hpm=20
+                        attackm=5
+                        ;;
+                    1)
+                        name="Goblin"
+                        hpm=15
+                        attackm=5
+                        ;;
+                    2)
+                        name="Troll"
+                        hpm=30
+                        attackm=5
+                        ;;
+                esac
+
+                # Checks if player is ready
+                if [[ $ready == "y" ]]; then
             
-                # Calling a fight function
-                fight 
-                
-                if [[ $dead -eq 1 ]]; then
-                    break
+                    # Calling a fight function
+                    fight 
+
+                    # ending for cycle if you die
+                    if [[ $dead -eq 1 ]]; then
+                        break
+                    fi
+
+                # if player pressed anything else than y    
+                elif [[ $ready != "y" ]]; then 
+                    echo "Goodbye!"
+                    exit 0         
                 fi
+            done
 
-            # if player pressed anything else than y    
-            elif [[ $ready != "y" ]]; then 
-                echo "Goodbye!"
-                exit 0         
+            # Cending while true loop if you are alive
+            if [[ $dead -eq 0 ]]; then
+                break
             fi
-        done
 
-        # Checking if player is dead
-        if [[ $dead -eq 1 ]]; then
-            exit 0
-        fi
+            echo "You died! Respawning at checkpoint..."
+            dead=0
+            restore
+
+            # end of while loop
+        done
 
         # Restoring hp to max_hp a speed to max_speed
         restore
@@ -468,57 +482,69 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
           //  (#######)  /  \  
          ||    \#####/   /  \   
            \\    /   \   /    \  
+
+        checkpoint
         "
    
         sleep 5
         clear
 
-        # Second dungeon
-        for round in 1 2 3 4; do
+        while true; do
+            # Second dungeon
+            for round in 1 2 3 4; do
 
-            # random choosing enemies from case
-            enemy=$(( RANDOM % 5 ))
+                # random choosing enemies from case
+                enemy=$(( RANDOM % 5 ))
 
-            case $enemy in
-                0)
-                    name="Skeleton"
-                    hpm=20
-                    attackm=5
-                    ;;
-                1)
-                    name="Goblin"
-                    hpm=15
-                    attackm=5
-                    ;;
-                2)
-                    name="Troll"
-                    hpm=30
-                    attackm=5
-                    ;;
-                3)
-                    name="Cave Troll"
-                    hpm=35
-                    attackm=10
-                    ;;
-                4)
-                    name="Spider"
-                    hpm=20
-                    attackm=10
-                    ;;
-            esac
+                case $enemy in
+                    0)
+                        name="Skeleton"
+                        hpm=20
+                        attackm=5
+                        ;;
+                    1)
+                        name="Goblin"
+                        hpm=15
+                        attackm=5
+                        ;;
+                    2)
+                        name="Troll"
+                        hpm=30
+                        attackm=5
+                        ;;
+                    3)
+                        name="Cave Troll"
+                        hpm=35
+                        attackm=10
+                        ;;
+                    4)
+                        name="Spider"
+                        hpm=20
+                        attackm=10
+                        ;;
+                esac
             
-            # Calling a fight function
-            fight
+                # Calling a fight function
+                fight
 
+                # ending for cycle if you die
+                if [[ $dead -eq 1 ]]; then
+                    break
+                fi
+
+                # end of for cycle
+            done
+
+            # Ending while loop if you are alive
             if [[ $dead -eq 1 ]]; then
                 break
             fi
-        done
 
-        # Checking if player is dead
-        if [[ $dead -eq 1 ]]; then
-            exit 0
-        fi
+            echo "You died! Respawning at checkpoint..."
+            dead=0
+            restore
+            # end of while loop
+        done
 
         # Restoring hp to max_hp a speed to max_speed
         restore
@@ -531,42 +557,51 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
            | |###|###| |   
            | |###|*##| |   
            | |###|###| |   
-               /   \  
+               /   \
+
+        checkpiont  
         "
         sleep 5
         clear
 
-        # Third dungeon
-        for round in 1 2 3 4 5 6 7 8; do
+        while true; do
+            # Third dungeon
+            for round in 1 2 3 4 5 6 7 8; do
 
-            # random choosing enemies from case
-            enemy=$(( RANDOM % 2 ))
+                # random choosing enemies from case
+                enemy=$(( RANDOM % 2 ))
 
-            case $enemy in
-                0)
-                    name="Skeleton"
-                    hpm=20
-                    attackm=5
-                    ;;
-                1)
-                    name="Undead"
-                    hpm=25
-                    attackm=5
-                    ;;
-            esac
+                case $enemy in
+                    0)
+                        name="Skeleton"
+                        hpm=20
+                        attackm=5
+                        ;;
+                    1)
+                        name="Undead"
+                        hpm=25
+                        attackm=5
+                        ;;
+                esac
             
-            # Calling a fight function
-            fight
+                # Calling a fight function
+                fight
 
-            if [[ $dead -eq 1 ]]; then
+                # if you died breaks the for loop
+                if [[ $dead -eq 1 ]]; then
+                    break
+                fi
+            done
+
+            # if you are alive breaks the while loop
+            if [[ $dead -eq 0 ]]; then
                 break
             fi
-        done
 
-        # Checking if player is dead
-        if [[ $dead -eq 1 ]]; then
-            exit 0
-        fi
+            echo "You died! Respawning at checkpoint..."
+            dead=0
+            restore
+        done
 
         # Restoring hp to max_hp a speed to max_speed
         restore
@@ -584,23 +619,32 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
             #### /
               /
            /
+
+        checkpoint   
         "
         sleep 5
         clear
 
-        # Third dungeon
-        # boss stats
-        name="BOSS"
-        hpm=40
-        attackm=10
-            
-        # Calling a fight function
-        fight
+        while true; do  
+            # Third dungeon
+            # boss stats
+            name="BOSS"
+            hpm=40
+            attackm=10
+          
+            # Calling a fight function
+            fight
         
-        # Checking if player is dead
-        if [[ $dead -eq 1 ]]; then
-            exit 0
-        fi
+            # Checking if player is dead
+            if [[ $dead -eq 0 ]]; then
+                break
+            fi
+
+            # if you died, brings you to checkpoint
+            echo "You died! Respawning at checkpoint..."
+            dead=0
+            restore
+        done
 
         echo "=== YOU WON! ==="
         sleep 10

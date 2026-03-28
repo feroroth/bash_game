@@ -405,7 +405,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
             \ /__/   /\     
             //      /  \    
            ||       /  \ 
-            \\ / \  /    \
+            \\ / \  /    )
              /   \ 
 
         checkpoint    
@@ -430,7 +430,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                         attackm=5
                         ascii="
                             __    
-                          /    \
+                          /    )
                          | ()() | 
                           \ /\ /  
                            ||||        
@@ -452,7 +452,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                         attackm=5
                         ascii="
                          ______
-                        /      \
+                        /      )
                         | O  O |
                         \  ||  /
                          ------
@@ -523,7 +523,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                         attackm=5
                         ascii="
                             __    
-                          /    \
+                          /    )
                          | ()() | 
                           \ /\ /  
                            ||||        
@@ -545,7 +545,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                         attackm=5
                         ascii="
                          ______
-                        /      \
+                        /      )
                         | O  O |
                         \  ||  /
                          ------
@@ -557,7 +557,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                         attackm=10
                         ascii="
                          ______
-                        /      \
+                        /      )
                         | O  O |
                         \  ||  /
                          ------
@@ -631,7 +631,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                         attackm=5
                         ascii="
                             __    
-                          /    \
+                          /    )
                          | ()() | 
                           \ /\ /  
                            ||||        
@@ -643,7 +643,7 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                         attackm=5
                         ascii="
                             __    
-                          /    \
+                          /    )
                          | ()() | 
                           \ /\ /  
                            |--|        

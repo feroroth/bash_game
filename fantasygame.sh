@@ -128,7 +128,7 @@ echo "
 sleep 3
 
 echo "
-For info about class stats type: info1, info2, info3
+For info about class stats type: info1 = 4, info2 = 5, info3 = 6
 "
 while true; do
     read class
@@ -165,14 +165,14 @@ while true; do
             max_speed=30
             break
             ;;  
-        info1)
+        4)
             echo "
             info knight:
             hp = 30
             attack = 30
             speed = 10"
             ;;    
-        info2)
+        5)
             echo "
             info mage:
             hp = 20
@@ -180,7 +180,7 @@ while true; do
             magicattack = 30
             speed = 20"
             ;;    
-        info3)
+        6)
             echo "
             info archer:
             hp = 25
@@ -223,6 +223,7 @@ fight() {
 
     playerdamage=0
     # Beggining of attack
+    echo "$ascii"
     echo "=== $name attacks! ==="
     echo ""
     echo "$name - hp = $hpm"
@@ -427,16 +428,35 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                         name="Skeleton"
                         hpm=20
                         attackm=5
+                        ascii="
+                            __    
+                          /    \
+                         | ()() | 
+                          \ /\ /  
+                           ||||        
+                        "
                         ;;
                     1)
                         name="Goblin"
                         hpm=15
                         attackm=5
+                        ascii="
+                         |\  _____  /|
+                          \|/ * * \|/
+                            \_____/ 
+                        "
                         ;;
                     2)
                         name="Troll"
                         hpm=30
                         attackm=5
+                        ascii="
+                         ______
+                        /      \
+                        | O  O |
+                        \  ||  /
+                         ------
+                        "
                         ;;
                 esac
 
@@ -501,26 +521,59 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                         name="Skeleton"
                         hpm=20
                         attackm=5
+                        ascii="
+                            __    
+                          /    \
+                         | ()() | 
+                          \ /\ /  
+                           ||||        
+                        "
                         ;;
                     1)
                         name="Goblin"
                         hpm=15
                         attackm=5
+                        ascii="
+                         |\  _____  /|
+                          \|/ * * \|/
+                            \_____/ 
+                        "
                         ;;
                     2)
                         name="Troll"
                         hpm=30
                         attackm=5
+                        ascii="
+                         ______
+                        /      \
+                        | O  O |
+                        \  ||  /
+                         ------
+                        "
                         ;;
                     3)
                         name="Cave Troll"
                         hpm=35
                         attackm=10
+                        ascii="
+                         ______
+                        /      \
+                        | O  O |
+                        \  ||  /
+                         ------
+                        "
                         ;;
                     4)
                         name="Spider"
                         hpm=20
                         attackm=10
+                        ascii="
+                              _
+                          || / \ ||
+                          \\\ \ / //
+                          // ( ) \\
+                          ||     ||
+                        "
                         ;;
                 esac
             
@@ -576,11 +629,25 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
                         name="Skeleton"
                         hpm=20
                         attackm=5
+                        ascii="
+                            __    
+                          /    \
+                         | ()() | 
+                          \ /\ /  
+                           ||||        
+                        "
                         ;;
                     1)
                         name="Undead"
                         hpm=25
                         attackm=5
+                        ascii="
+                            __    
+                          /    \
+                         | ()() | 
+                          \ /\ /  
+                           |--|        
+                        "
                         ;;
                 esac
             
@@ -648,6 +715,6 @@ if [[ $class == 1 || $class == 2 || $class == 3 ]]; then
 
         echo "=== YOU WON! ==="
         sleep 10
-    fi
+    fi   
 fi
 
